@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -16,7 +16,7 @@ enum UserRole {
 }
 
 model User {
-  id          String      @id @unique @default(uuid())
+  id          String      @id @default(uuid()) @map("_id")
   username    String?     @unique
   password    String
   nickname    String
@@ -31,7 +31,7 @@ model User {
 }
 
 model AuthToken {
-  id                String      @id @unique @default(uuid())
+  id                String      @id @default(uuid()) @map("_id")
   userId            String      @unique
   refreshToken      String
   createdAt         DateTime    @default(now())
@@ -41,7 +41,7 @@ model AuthToken {
 }
 
 model Post {
-  id          String      @id @unique @default(uuid())
+  id          String      @id @default(uuid()) @map("_id")
   title       String
   content     String
   category    String[]    @default([])
